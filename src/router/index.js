@@ -1,10 +1,10 @@
 import { createRouter, createWebHashHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
-import Books from '@/components/Books.vue'
-import Words from '@/components/Words.vue'
-import Profile from '@/components/Profile.vue'
-import Signing from '@/components/Signing.vue'
-import Signup from '@/components/Signup.vue'
+import Books from '@/views/Books.vue'
+import Words from '@/views/Words.vue'
+import Profile from '@/views/Profile.vue'
+import Signing from '@/views/Signing.vue'
+import Signup from '@/views/Signup.vue'
 
 const routes = [
   {

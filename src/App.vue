@@ -2,9 +2,7 @@
   <v-app>
     <v-main>
       <AppHeader />
-      <v-content>
-        <router-view />
-      </v-content>
+      <router-view />
       <AppFooter />
     </v-main>
   </v-app>
