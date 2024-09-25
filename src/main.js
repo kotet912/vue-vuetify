@@ -6,7 +6,10 @@ import 'vuetify/styles'
 import { createVuetify } from 'vuetify'
 import * as components from 'vuetify/components'
 import * as directives from 'vuetify/directives'
+import firebaseConfig from './config/firebase'
+import { initializeApp } from "firebase/app";
 
+const app = initializeApp(firebaseConfig);
 
 // Components
 import App from './App.vue'
@@ -17,4 +20,4 @@ const vuetify = createVuetify({
   components,
   directives,
 })
-createApp(App).use(vuetify).use(store).use(router).mount('#app')
+createApp(App).use(vuetify).use(store).use(router).use(app).mount('#app')
