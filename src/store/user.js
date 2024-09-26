@@ -1,4 +1,4 @@
-import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
 
 export default ({
   state: {
@@ -30,19 +30,32 @@ export default ({
       commit('SET_PROCESSING', true);
       createUserWithEmailAndPassword(auth, email, password)
         .then((userCredential) => {
-          const user = userCredential.user;
+          // const user = userCredential.user;
           commit('SET_USER', userCredential.uid);
           commit('SET_PROCESSING', false);
-
         })
         .catch((error) => {
           const errorCode = error.code;
           const errorMessage = error.message;
           commit('SET_PROCESSING', false);
           commit('SET_ERROR', error.message);
-
         });
     },
+    SIGNING ({ commit }, { email, password }) {
+      const auth = getAuth();
+      commit('SET_PROCESSING', true);
+      signInWithEmailAndPassword(auth, email, password)
+        .then((userCredential) => {
+          commit('SET_USER', userCredential.uid);
+          commit('SET_PROCESSING', false);
+        })
+        .catch((error) => {
+          const errorCode = error.code;
+          const errorMessage = error.message;
+          commit('SET_PROCESSING', false);
+          commit('SET_ERROR', error.message);
+        });
+    }
   },
   getters: {
     isUserAuthenticated: (state) => state.user.isAuthenticated,

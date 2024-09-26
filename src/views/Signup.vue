@@ -53,6 +53,8 @@ export default {
   watch: {
     isUserAuthenticated (authenticated) {
       if (authenticated) {
+        console.log('home');
+
         this.$router.push('/home');
       }
     }
