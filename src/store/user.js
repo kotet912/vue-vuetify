@@ -1,4 +1,4 @@
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from "firebase/auth";
 
 export default ({
   state: {
@@ -13,24 +13,20 @@ export default ({
       state.user.isAuthenticated = true
       state.user.uid = payload
     },
-    SET_PROCESSING (state, payload) {
-      state.processing = payload
+    UNSET_USER (state) {
+      state.user.isAuthenticated = false
+      state.user.uid = null
     },
-    SET_ERROR (state, payload) {
-      state.error = payload
-    },
-    CLEAR_ERROR (state) {
-      state.error = null
-    },
+
   },
   actions: {
     SIGNUP ({ commit }, { email, password }) {
       const auth = getAuth();
       commit('SET_PROCESSING', true);
+      commit('CLEAR_ERROR')
       createUserWithEmailAndPassword(auth, email, password)
-        .then((userCredential) => {
-          // const user = userCredential.user;
-          commit('SET_USER', userCredential.uid);
+        .then(() => {
+          // commit('SET_USER', userCredential.uid);
           commit('SET_PROCESSING', false);
         })
         .catch((error) => {
@@ -43,9 +39,10 @@ export default ({
     SIGNING ({ commit }, { email, password }) {
       const auth = getAuth();
       commit('SET_PROCESSING', true);
+      commit('CLEAR_ERROR')
       signInWithEmailAndPassword(auth, email, password)
-        .then((userCredential) => {
-          commit('SET_USER', userCredential.uid);
+        .then(() => {
+          // commit('SET_USER', userCredential.uid);
           commit('SET_PROCESSING', false);
         })
         .catch((error) => {
@@ -54,7 +51,20 @@ export default ({
           commit('SET_PROCESSING', false);
           commit('SET_ERROR', errorMessage, errorCode);
         });
-    }
+    },
+    SIGNOUT () {
+      const auth = getAuth();
+      signOut(auth).then(() => {
+      }).catch(() => {
+      });
+    },
+    STATE_CHANGED ({ commit }, payload) {
+      if (payload) {
+        commit('SET_USER', payload.uid);
+      } else {
+        commit('UNSET_USER');
+      }
+    },
   },
   getters: {
     isUserAuthenticated: (state) => state.user.isAuthenticated,

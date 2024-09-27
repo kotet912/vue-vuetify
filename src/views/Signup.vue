@@ -11,17 +11,17 @@
             <v-alert v-if="error" dense border="left" type="warning" :value="error">
               {{ error }}
             </v-alert>
-            <v-form>
+            <v-form v-model="valid">
               <v-text-field prepend-icon="mdi mdi-account" name="login" label="E-mail" type="text" required
-                v-model="email"></v-text-field>
+                v-model="email" :rules="emailRules"></v-text-field>
               <v-text-field id="password" prepend-icon="mdi mdi-lock" name="Пароль" label="Password" type="password"
-                required v-model="password"></v-text-field>
+                required v-model="password" :rules="passwordRules"></v-text-field>
             </v-form>
           </v-card-text>
           <v-card-actions>
             <v-spacer></v-spacer>
             <v-btn color="primary rounded-lg" border="primary md" @click.prevent="signup"
-              :disabled="processing">Зарегистрироваться</v-btn>
+              :disabled="processing || !valid">Зарегистрироваться</v-btn>
           </v-card-actions>
         </v-card>
       </v-col>
@@ -36,7 +36,16 @@ export default {
   data () {
     return {
       email: null,
-      password: null
+      password: null,
+      valid: false,
+      emailRules: [
+        v => !!v || 'Введите электронную почту',
+        v => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v) || 'Введите корректный адрес электронной почты'
+      ],
+      passwordRules: [
+        v => !!v || 'Введите пароль',
+        v => v.length >= 6 || 'Пароль должен быть не менее 6 символов'
+      ]
     };
   },
   computed: {

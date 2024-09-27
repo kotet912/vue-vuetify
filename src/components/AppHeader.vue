@@ -17,6 +17,10 @@
         <v-btn v-for="(item, i) in menuItems" :key="`item${i}`" :to="item.to" :prepend-icon="item.icon">
           {{ item.text }}
         </v-btn>
+        <v-btn flat @click.prevent="signout" v-if="isUserAuthenticated">
+          <v-icon>mdi mdi-logout</v-icon>
+          Выйти
+        </v-btn>
       </v-toolbar-items>
     </v-toolbar>
   </div>
@@ -28,15 +32,24 @@ export default {
   name: 'VueVuetifyAppHeader',
 
   computed: {
+    isUserAuthenticated () {
+      return this.$store.getters.isUserAuthenticated;
+    },
     menuItems () {
-      return [
-        { icon: 'mdi mdi-eye', text: 'Читать', to: '/books' },
-        { icon: 'mdi mdi-puzzle', text: 'Учить слова', to: '/words' },
-        { icon: 'mdi mdi-account-box-outline', text: 'Мой Кабинет', to: '/profile' },
-        { icon: 'mdi mdi-logout', text: 'Выйти', to: '/logout' },
-        { icon: 'mdi mdi-account-key', text: 'Войти', to: '/signing' },
-        { icon: 'mdi mdi-account-plus', text: 'Зарегистрироваться', to: '/signup' },
-      ];
+      return this.isUserAuthenticated
+        ?
+        [
+          { icon: 'mdi mdi-eye', text: 'Читать', to: '/books' },
+          { icon: 'mdi mdi-puzzle', text: 'Учить слова', to: '/words' },
+          { icon: 'mdi mdi-account-box-outline', text: 'Мой Кабинет', to: '/profile' },
+        ]
+        :
+        [
+          { icon: 'mdi mdi-eye', text: 'Читать', to: '/books' },
+          { icon: 'mdi mdi-puzzle', text: 'Учить слова', to: '/words' },
+          { icon: 'mdi mdi-account-key', text: 'Войти', to: '/signing' },
+          { icon: 'mdi mdi-account-plus', text: 'Зарегистрироваться', to: '/signup' },
+        ];
     },
   },
   data () {
@@ -50,6 +63,12 @@ export default {
   },
 
   methods: {
+    signout () {
+      this.$store.dispatch('SIGNOUT');
+
+
+
+    }
 
   },
 };
