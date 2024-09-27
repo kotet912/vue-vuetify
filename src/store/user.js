@@ -24,7 +24,6 @@ export default ({
     },
   },
   actions: {
-    /* eslint-disable */
     SIGNUP ({ commit }, { email, password }) {
       const auth = getAuth();
       commit('SET_PROCESSING', true);
@@ -38,7 +37,7 @@ export default ({
           const errorCode = error.code;
           const errorMessage = error.message;
           commit('SET_PROCESSING', false);
-          commit('SET_ERROR', error.message);
+          commit('SET_ERROR', errorMessage, errorCode);
         });
     },
     SIGNING ({ commit }, { email, password }) {
@@ -53,7 +52,7 @@ export default ({
           const errorCode = error.code;
           const errorMessage = error.message;
           commit('SET_PROCESSING', false);
-          commit('SET_ERROR', error.message);
+          commit('SET_ERROR', errorMessage, errorCode);
         });
     }
   },
