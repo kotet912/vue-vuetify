@@ -1,6 +1,6 @@
 <template>
   <v-container class="fluid fill-height ">
-    <v-layout class="overflow-visible justify-center align-center">
+    <v-row class="overflow-visible justify-center align-center">
       <v-col xs="10" sm="8" md="6">
         <v-card class="elevation-12 ">
           <v-toolbar color="primary">
@@ -24,7 +24,7 @@
           </v-card-actions>
         </v-card>
       </v-col>
-    </v-layout>
+    </v-row>
   </v-container>
 </template>
 
