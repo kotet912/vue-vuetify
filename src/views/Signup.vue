@@ -1,13 +1,12 @@
 <template>
-  <v-container fluid fill-height class="fill-height ">
-    <v-layout align-center justify-center class="overflow-visible  ">
-      <v-col xs12 sm8 md6>
+  <v-container class="fluid fill-height ">
+    <v-layout class="overflow-visible justify-center align-center">
+      <v-col xs="10" sm="8" md="6">
         <v-card class="elevation-12 ">
-          <v-toolbar dark color="primary ">
+          <v-toolbar color="primary ">
             <v-toolbar-title>Регистрация</v-toolbar-title>
           </v-toolbar>
           <v-card-text>
-
             <v-alert v-if="error" dense border="left" type="warning" :value="error">
               {{ error }}
             </v-alert>
@@ -20,7 +19,7 @@
           </v-card-text>
           <v-card-actions>
             <v-spacer></v-spacer>
-            <v-btn color="primary rounded-lg" border="primary md" @click.prevent="signup"
+            <v-btn color="primary rounded-lg" border="primary md" @click.prevent="signup" :loading="processing"
               :disabled="processing || !valid">Зарегистрироваться</v-btn>
           </v-card-actions>
         </v-card>
@@ -38,6 +37,8 @@ export default {
       email: null,
       password: null,
       valid: false,
+      loader: null,
+      loading: false,
       emailRules: [
         v => !!v || 'Введите электронную почту',
         v => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v) || 'Введите корректный адрес электронной почты'
@@ -66,7 +67,15 @@ export default {
 
         this.$router.push('/home');
       }
-    }
+    },
+    loader () {
+      const l = this.loader
+      this[l] = !this[l]
+
+      setTimeout(() => (this[l] = false), 3000)
+
+      this.loader = null
+    },
   },
 
   methods: {

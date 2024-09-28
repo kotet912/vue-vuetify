@@ -87,6 +87,7 @@ export default {
   methods: {
     signout () {
       this.$store.dispatch('SIGNOUT');
+      this.$router.push('/signing');
 
 
 

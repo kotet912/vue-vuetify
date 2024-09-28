@@ -5,6 +5,7 @@ import Words from '@/views/Words.vue'
 import Profile from '@/views/Profile.vue'
 import Signing from '@/views/Signing.vue'
 import Signup from '@/views/Signup.vue'
+import Store from '@/store/index.js'
 
 const routes = [
   {
@@ -25,7 +26,8 @@ const routes = [
   {
     path: '/profile',
     name: 'profile',
-    component: Profile
+    component: Profile,
+    beforeEnter: AuthGuard
   },
   {
     path: '/signing',
@@ -39,6 +41,24 @@ const routes = [
   },
 
 ]
+
+function AuthGuard (to, from, next) {
+  const user = Store.getters.isUserAuthenticated
+
+  if (to.name === 'signing' || to.name === 'signup') {
+    if (user) {
+      next({ name: 'profile' })
+    } else {
+      next()
+    }
+  } else {
+    if (!user) {
+      next({ name: 'signing' })
+    } else {
+      next()
+    }
+  }
+}
 
 const router = createRouter({
   history: createWebHashHistory(),
