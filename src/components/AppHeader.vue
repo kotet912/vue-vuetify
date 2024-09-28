@@ -22,24 +22,22 @@
           Выйти
         </v-btn>
 
-        <v-row justify="center">
-          <v-dialog v-model="dialog" persistent max-width="290">
-            <v-card>
-              <v-card-title class="text-h5">
-                Выйти?
-              </v-card-title>
-              <v-card-actions>
-                <v-spacer></v-spacer>
-                <v-btn color="primary darken-1" text @click.prevent="signout(); dialog = false">
-                  Да
-                </v-btn>
-                <v-btn color="red darken-1" text @click="dialog = false">
-                  Нет
-                </v-btn>
-              </v-card-actions>
-            </v-card>
-          </v-dialog>
-        </v-row>
+        <v-dialog v-model="dialog" persistent max-width="290">
+          <v-card>
+            <v-card-title class="text-h5">
+              Выйти?
+            </v-card-title>
+            <v-card-actions>
+              <v-spacer></v-spacer>
+              <v-btn color="primary darken-1" text @click.prevent="signout(); dialog = false">
+                Да
+              </v-btn>
+              <v-btn color="red darken-1" text @click="dialog = false">
+                Нет
+              </v-btn>
+            </v-card-actions>
+          </v-card>
+        </v-dialog>
 
       </v-toolbar-items>
     </v-toolbar>

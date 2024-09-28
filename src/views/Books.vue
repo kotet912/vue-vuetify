@@ -1,10 +1,13 @@
 <template>
   <div>
-    <h1>VueVuetifyBooks</h1>
+    <BooksList />
   </div>
 </template>
 
 <script>
+import BooksList from '@/components/BooksList';
+
+
 export default {
   name: 'VueVuetifyBooks',
 
@@ -12,6 +15,9 @@ export default {
     return {
 
     };
+  },
+  components: {
+    BooksList,
   },
 
   mounted () {
